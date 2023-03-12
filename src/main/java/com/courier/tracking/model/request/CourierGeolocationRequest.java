@@ -16,7 +16,7 @@ import java.time.LocalTime;
 @AllArgsConstructor
 public class CourierGeolocationRequest extends BaseRequest {
 
-    @JsonFormat(pattern = "HH:mm:ss")
+    @JsonFormat(pattern = "HH:mm")
     private LocalTime time;
     private CourierDto courier;
     private Double lat;

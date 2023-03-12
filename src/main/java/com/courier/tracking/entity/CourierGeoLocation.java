@@ -22,7 +22,7 @@ public class CourierGeoLocation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "courier_id")
+    @Column(name = "couriers_id")
     private String courierId;
 
     @Column(name = "time")
@@ -34,7 +34,7 @@ public class CourierGeoLocation {
     @Column(name = "lng")
     private Double lng;
 
-    @Column(name = "created_date", columnDefinition = "TIMESTAMP WITH ZONE")
+    @Column(name = "created_date"/*, columnDefinition = "TIMESTAMP WITH ZONE"*/)
     @CreationTimestamp
     private ZonedDateTime createdDate;
 }
