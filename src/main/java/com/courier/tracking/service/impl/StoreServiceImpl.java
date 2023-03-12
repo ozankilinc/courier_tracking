@@ -1,11 +1,13 @@
 package com.courier.tracking.service.impl;
 
+import com.courier.tracking.model.dto.PointDto;
 import com.courier.tracking.model.dto.StoreDto;
 import com.courier.tracking.repository.StoreRepository;
 import com.courier.tracking.service.StoreService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -26,6 +28,11 @@ public class StoreServiceImpl implements StoreService {
     @Override
     public StoreDto getStoreByName(String name) {
         return storeRepository.getStoreByName(name);
+    }
+
+    @Override
+    public List<String> getStoreNamesByPoint(PointDto point) {
+        return Collections.emptyList();
     }
 
 
