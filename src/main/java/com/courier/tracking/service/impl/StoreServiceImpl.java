@@ -4,11 +4,12 @@ import com.courier.tracking.model.dto.PointDto;
 import com.courier.tracking.model.dto.StoreDto;
 import com.courier.tracking.repository.StoreRepository;
 import com.courier.tracking.service.StoreService;
+import com.courier.tracking.util.NavUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -32,7 +33,10 @@ public class StoreServiceImpl implements StoreService {
 
     @Override
     public List<String> getStoreNamesByPoint(PointDto point) {
-        return Collections.emptyList();
+        return storeRepository.getAllStores().stream()
+                .filter(store -> NavUtils.getDistance(point, store.getPoint()) <= 100)
+                .map(StoreDto::getName)
+                .collect(Collectors.toList());
     }
 
 

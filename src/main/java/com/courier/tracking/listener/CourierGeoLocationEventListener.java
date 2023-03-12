@@ -26,6 +26,7 @@ public class CourierGeoLocationEventListener {
 
     @EventListener
     public void listenEvent(CourierLocationEvent event) {
+        log.info(event.toString());
         CourierGeoLocation courierGeoLocation = event.getCourierGeoLocation();
         PointDto pointDto = buildPointByCourierGeoLocation(courierGeoLocation);
         List<String> storeNamesByPoint = storeService.getStoreNamesByPoint(pointDto);

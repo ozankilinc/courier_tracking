@@ -22,23 +22,6 @@ public class NavUtils {
         dist = dist * 60 * 1.1515;
         dist = dist * 1.609344;
         return (dist)*1000;
-        /*
-        final SpatialContext spatialContext = SpatialContext.GEO;
-        Point point1 = spatialContext.makePoint(startPoint.getLat(), startPoint.getLng());
-        Point point2 = spatialContext.makePoint(endPoint.getLat(), endPoint.getLng());
-        return DistanceUtils.degrees2Dist(spatialContext.getDistCalc().distance(point1, point2), DistanceUtils.DEG_TO_KM) * 1000;
-
-
-        double longitude1 = startPoint.getLng();
-        double longitude2 = endPoint.getLng();
-        double latitude1 = Math.toRadians(startPoint.getLat());
-        double latitude2 = Math.toRadians(endPoint.getLat());
-        double longDiff = Math.toRadians(longitude2 - longitude1);
-        double y = Math.sin(longDiff) * Math.cos(latitude2);
-        double x = Math.cos(latitude1) * Math.sin(latitude2) - Math.sin(latitude1) * Math.cos(latitude2) * Math.cos(longDiff);
-        return (Math.toDegrees(Math.atan2(y, x)) + 360) % 360;
-
- */
     }
 
     private static double deg2rad(double deg) {
