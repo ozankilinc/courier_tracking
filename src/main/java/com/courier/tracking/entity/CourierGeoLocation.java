@@ -16,6 +16,8 @@ import java.time.ZonedDateTime;
 @Entity
 public class CourierGeoLocation {
 
+    // : TODO burada uniqulik sağlanacak
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
