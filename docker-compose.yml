@@ -1,0 +1,14 @@
+version: '3.7'
+services:
+  courier-tracking:
+    container_name: courier-tracking
+    build:
+      dockerfile: Dockerfile
+    image: courier-tracking:latest
+    ports:
+      - 8081:8081
+    networks:
+      - spring-couirer-tracking-network
+networks:
+  spring-couirer-tracking-network:
+    driver: bridge

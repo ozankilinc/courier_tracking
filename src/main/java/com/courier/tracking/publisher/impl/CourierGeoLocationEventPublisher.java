@@ -1,6 +1,5 @@
 package com.courier.tracking.publisher.impl;
 
-import com.courier.tracking.event.CourierGeoLocationEvent;
 import com.courier.tracking.event.CourierLocationEvent;
 import com.courier.tracking.publisher.AbstractEventPublisher;
 import com.courier.tracking.publisher.EventPublisher;

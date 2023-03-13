@@ -9,4 +9,6 @@ public interface CourierBusinessService {
     void processCourierGeolocations(List<CourierGeolocationRequest> courierGeolocationRequestList);
 
     void processCourierGeolocation(CourierGeolocationRequest courierGeolocationRequest);
+
+    Double getTotalTravelDistance(String courierId);
 }

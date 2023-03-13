@@ -1,16 +1,13 @@
 package com.courier.tracking.listener;
 
-import com.courier.tracking.entity.CourierGeoLocation;
-import com.courier.tracking.event.CourierGeoLocationEvent;
 import com.courier.tracking.event.CourierLocationEvent;
-import com.courier.tracking.model.dto.PointDto;
+import com.courier.tracking.model.dto.CourierLegDto;
+import com.courier.tracking.service.CourierLocationEventBusinessService;
 import com.courier.tracking.service.StoreService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -18,24 +15,15 @@ import java.util.List;
 public class CourierGeoLocationEventListener {
 
     private final StoreService storeService;
+    private final CourierLocationEventBusinessService courierLocationEventBusinessService;
 
-    @EventListener
-    public void listenEvent(CourierGeoLocationEvent event) {
-        log.info(event.toString());
-    }
 
     @EventListener
     public void listenEvent(CourierLocationEvent event) {
         log.info(event.toString());
-        CourierGeoLocation courierGeoLocation = event.getCourierGeoLocation();
-        PointDto pointDto = buildPointByCourierGeoLocation(courierGeoLocation);
-        List<String> storeNamesByPoint = storeService.getStoreNamesByPoint(pointDto);
-    }
+        CourierLegDto courierLegDto = event.getCourierLegDto();
+        String nearestStoreByPoint = storeService.getNearestStoreByPoint(courierLegDto.getCurrentPoint());
+        courierLocationEventBusinessService.handleCourierLocationEvent(event, nearestStoreByPoint);
 
-    private PointDto buildPointByCourierGeoLocation(CourierGeoLocation courierGeoLocation) {
-        return PointDto.builder()
-                .lng(courierGeoLocation.getLng())
-                .lat(courierGeoLocation.getLat())
-                .build();
     }
 }

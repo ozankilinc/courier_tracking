@@ -1,14 +1,12 @@
 package com.courier.tracking.service.business;
 
-import com.courier.tracking.entity.CourierGeoLocation;
-import com.courier.tracking.event.CourierGeoLocationEvent;
 import com.courier.tracking.event.CourierLocationEvent;
-import com.courier.tracking.mapper.CourierGeoLocationEventMapper;
-import com.courier.tracking.mapper.CourierGeoLocationMapper;
+import com.courier.tracking.mapper.CourierLocationEventMapper;
+import com.courier.tracking.model.dto.CourierLegDto;
 import com.courier.tracking.model.request.CourierGeolocationRequest;
 import com.courier.tracking.publisher.impl.CourierGeoLocationEventPublisher;
 import com.courier.tracking.service.CourierBusinessService;
-import com.courier.tracking.service.CourierGeoLocationService;
+import com.courier.tracking.service.CourierLegService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Async;
@@ -21,38 +19,29 @@ import java.util.List;
 @Service
 public class CourierBusinessServiceImpl implements CourierBusinessService {
 
-    private final CourierGeoLocationEventMapper courierGeoLocationEventMapper;
-    private final CourierGeoLocationService courierGeoLocationService;
-    private final CourierGeoLocationMapper courierGeoLocationMapper;
+    private final CourierLegService courierLegService;
+    private final CourierLocationEventMapper courierLocationEventMapper;
     private final CourierGeoLocationEventPublisher courierGeoLocationEventPublisher;
+
 
     @Async
     @Override
     public void processCourierGeolocations(List<CourierGeolocationRequest> courierGeolocationRequestList) {
-        courierGeolocationRequestList.forEach(request -> {
-            CourierGeoLocation courierGeoLocation = courierGeoLocationMapper.mapToCourierGeoLocation(request);
-            courierGeoLocation = courierGeoLocationService.saveCourierGeoLocation(courierGeoLocation);
-            courierGeoLocationEventPublisher.publishEvent(new CourierLocationEvent(courierGeoLocation));
-        });
-
-        /*
-        List<CourierGeoLocationEvent> eventList = courierGeoLocationEventMapper.mapToList(courierGeolocationRequestList);
-        eventList.forEach(courierGeoLocationEventPublisher::publishEvent);
-         */
+        courierGeolocationRequestList.forEach(this::processCourierGeolocation);
     }
 
     @Async
     @Override
     public void processCourierGeolocation(CourierGeolocationRequest courierGeolocationRequest) {
-        CourierGeoLocation courierGeoLocation = courierGeoLocationMapper.mapToCourierGeoLocation(courierGeolocationRequest);
-        courierGeoLocation = courierGeoLocationService.saveCourierGeoLocation(courierGeoLocation);
-        courierGeoLocationEventPublisher.publishEvent(new CourierLocationEvent(courierGeoLocation));
+        CourierLegDto courierLegDto = courierLegService.findByCourierId(courierGeolocationRequest.getCourierId());
+        courierLegDto = courierLegService.saveCourierLeg(courierGeolocationRequest, courierLegDto);
+        CourierLocationEvent courierLocationEvent = courierLocationEventMapper.mapToCourierLocationEvent(courierLegDto);
+        courierGeoLocationEventPublisher.publishEvent(courierLocationEvent);
     }
 
-    private void test(List<CourierGeolocationRequest> courierGeolocationRequestList) {
-        log.info("Before The List Process Data Size: " + courierGeolocationRequestList.size());
-        List<CourierGeoLocationEvent> eventList = courierGeoLocationEventMapper.mapToList(courierGeolocationRequestList);
-        log.info("After The List Process Data Size: " + eventList.size());
-        eventList.forEach(a -> log.info(a.toString()));
+    @Override
+    public Double getTotalTravelDistance(String courierId) {
+        return courierLegService.getTotalTravelDistance(courierId);
     }
+
 }

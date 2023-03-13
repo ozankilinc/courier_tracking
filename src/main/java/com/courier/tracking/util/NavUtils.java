@@ -8,6 +8,9 @@ public class NavUtils {
     }
 
     public static double getDistance(PointDto startPoint, PointDto endPoint) {
+        if (startPoint == null) {
+            return 0.0;
+        }
 
         double lon1 = startPoint.getLng();
         double lon2 = endPoint.getLng();

@@ -13,6 +13,8 @@ public class StoreDto {
     private String name;
     private Double lat;
     private Double lng;
+    @JsonIgnore
+    private Double nearestDistance;
 
     @JsonIgnore
     public PointDto getPoint() {

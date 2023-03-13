@@ -13,5 +13,7 @@ public interface StoreService {
 
     StoreDto getStoreByName(String name);
 
+    String getNearestStoreByPoint(PointDto point);
+
     List<String> getStoreNamesByPoint(PointDto point);
 }
