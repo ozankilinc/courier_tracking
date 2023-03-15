@@ -37,7 +37,7 @@ public class CourierLegServiceImpl implements CourierLegService {
     @Cacheable(value = CourierTrackingConstants.COURIER_LEG_CACHE, key = "#courierId")
     @Override
     public CourierLegDto findByCourierId(String courierId) {
-        return courierLegRepository.findByCourierId(courierId)
+        return courierLegRepository.findTopByCourierIdOrderByCreatedDateDesc(courierId)
                 .map(courierLegMapper::mapToCourierLegDto)
                 .orElse(null);
     }

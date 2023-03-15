@@ -8,9 +8,11 @@ import java.util.Optional;
 
 public interface CourierLegRepository extends JpaRepository<CourierLeg, Long> {
 
-    Optional<CourierLeg> findByCourierId(String courierId);
+    Optional<CourierLeg> findTopByCourierIdOrderByCreatedDateDesc(String courierId);
 
     @Query("SELECT SUM(c.distance) FROM CourierLeg c WHERE c.courierId =  ?1")
     Double getTotalTravelDistance(String courierId);
+
+
 
 }

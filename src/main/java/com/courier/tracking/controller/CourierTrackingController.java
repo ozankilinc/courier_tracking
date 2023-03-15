@@ -16,13 +16,13 @@ public class CourierTrackingController {
 
     private final CourierBusinessService courierBusinessService;
 
-    @PostMapping("/upload")
+    @PostMapping("/geolocations")
     public ResponseEntity<String> uploadCourierGeolocations(@RequestBody List<CourierGeolocationRequest> request) {
         courierBusinessService.processCourierGeolocations(request);
         return ResponseEntity.ok(CourierTrackingConstants.COURIER_UPLOAD_MESSAGE);
     }
 
-    @PostMapping("/upload/one")
+    @PostMapping("/geolocation")
     public ResponseEntity<String> uploadCourierGeolocation(@RequestBody CourierGeolocationRequest request) {
         courierBusinessService.processCourierGeolocation(request);
         return ResponseEntity.ok(CourierTrackingConstants.COURIER_UPLOAD_MESSAGE);
