@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class CourierLocationEventMapperImpl implements CourierLocationEventMapper {
+
     @Override
     public CourierLocationEvent mapToCourierLocationEvent(CourierLegDto courierLegDto) {
         return CourierLocationEvent.builder()

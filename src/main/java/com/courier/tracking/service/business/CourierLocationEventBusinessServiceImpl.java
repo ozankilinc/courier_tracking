@@ -36,7 +36,9 @@ public class CourierLocationEventBusinessServiceImpl implements CourierLocationE
                 if (duration.compareTo(entranceRule.getDuration()) < 0) {
                     courierEntranceLogService.logCourierEntrance(courierLegDto, storeName);
                 }
+                return;
             }
+            courierEntranceLogService.logCourierEntrance(courierLegDto, storeName);
         }
     }
 }

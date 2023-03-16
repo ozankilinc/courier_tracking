@@ -18,16 +18,6 @@ public class StoreServiceImpl implements StoreService {
     private final StoreRepository storeRepository;
 
     @Override
-    public List<StoreDto> getAllStores() {
-        return storeRepository.getAllStores();
-    }
-
-    @Override
-    public List<String> getAllStoreNames() {
-        return storeRepository.getAllStoreNames();
-    }
-
-    @Override
     public StoreDto getStoreByName(String name) {
         return storeRepository.getStoreByName(name);
     }
@@ -43,14 +33,5 @@ public class StoreServiceImpl implements StoreService {
                 .map(StoreDto::getName)
                 .orElse(null);
     }
-
-    @Override
-    public List<String> getStoreNamesByPoint(PointDto point) {
-        return storeRepository.getAllStores().stream()
-                .filter(store -> NavUtils.getDistance(point, store.getPoint()) <= 100)
-                .map(StoreDto::getName)
-                .collect(Collectors.toList());
-    }
-
 
 }

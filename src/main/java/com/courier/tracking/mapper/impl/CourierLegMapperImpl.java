@@ -12,6 +12,7 @@ import java.util.Optional;
 
 @Component
 public class CourierLegMapperImpl implements CourierLegMapper {
+    
     @Override
     public CourierLegDto mapToCourierLegDto(CourierLeg courierLeg) {
         PointDto currentPoint = PointDto.builder()

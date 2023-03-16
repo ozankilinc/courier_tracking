@@ -20,7 +20,6 @@ public class CourierGeoLocationEventListener {
 
     @EventListener
     public void listenEvent(CourierLocationEvent event) {
-        log.info(event.toString());
         CourierLegDto courierLegDto = event.getCourierLegDto();
         String nearestStoreByPoint = storeService.getNearestStoreByPoint(courierLegDto.getCurrentPoint());
         courierLocationEventBusinessService.handleCourierLocationEvent(event, nearestStoreByPoint);
